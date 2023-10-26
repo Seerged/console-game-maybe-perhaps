@@ -1,2 +1,3 @@
 # console-game-maybe-perhaps
-idk i like C#
+Just a repository so I can keep this stuff saved
+yeah idk im new to using github
