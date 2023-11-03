@@ -8,36 +8,24 @@ Random random = new();
 int total = 0;
 int target = 50;
 
-bool? wantsToPlay = null;
 bool isPlaying = false;
 bool hasWon = false;
 bool defeatedEnemy = false;
 
 string? readResult;
 
-do
+Console.Clear();
+
+Console.WriteLine("Turn Based Console Game");
+Console.WriteLine("How to play");
+Console.WriteLine("Play? [y/n]");
+
+readResult = Console.ReadLine();
+
+if (readResult != null)
 {
-  Console.Clear();
-
-  Console.WriteLine("Turn Based Console Game");
-  Console.WriteLine("");
-  Console.WriteLine("Play? [y/n]");
-
-  readResult = Console.ReadLine();
-
-  if (readResult != null)
-  {
-    if (readResult.ToLower() == "y")
-    {
-      wantsToPlay = true;
-      isPlaying = true;
-    }
-    else
-    {
-      wantsToPlay = false;
-    }
-  }
-} while (wantsToPlay == null);
+  if (readResult.ToLower() == "y") isPlaying = true;
+}
 
 while (isPlaying && !hasWon)
 {
@@ -45,7 +33,7 @@ while (isPlaying && !hasWon)
   DiceRoll();
 
   Console.WriteLine("A NEW ENEMY APPEARS...\n");
-  Thread.Sleep(1250);
+  Thread.Sleep(1500);
 
   SelectOptions(GenerateRandEnemy(), player);
 }
@@ -81,6 +69,7 @@ void DiceRoll()
 
   Console.WriteLine("Press any key to continue");
   Console.ReadKey();
+  Console.Clear();
 }
 
 void SelectOptions(Enemy enemy, Player player)
@@ -96,7 +85,7 @@ void SelectOptions(Enemy enemy, Player player)
     Console.WriteLine("What will you do?");
     Console.WriteLine("1: Attack");
     Console.WriteLine("2: Items");
-    Console.WriteLine("3: View Enemy Stats");
+    Console.WriteLine("3: View Stats");
 
     readResult = Console.ReadLine();
 
@@ -125,15 +114,26 @@ void SelectOptions(Enemy enemy, Player player)
           break;
 
         case "2":
-          // items
-          Console.WriteLine("To be implemented");
-          Thread.Sleep(2000);
+          player.ViewInventory();
+          player.VerifyInventory();
           break;
 
         case "3":
-          // enemy stats
-          Console.WriteLine("To be implemented");
-          Thread.Sleep(2000);
+          Console.WriteLine("Which stats do you want to check?");
+          Console.WriteLine("1. Your Stats\n2. Enemy Stats");
+
+          readResult = Console.ReadLine();
+
+          switch (readResult)
+          {
+            case "1":
+              player.DisplayInfo();
+              break;
+
+            case "2":
+              enemy.DisplayInfo();
+              break;
+          }
           break;
 
         case "exit":

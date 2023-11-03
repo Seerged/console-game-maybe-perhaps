@@ -1,10 +1,7 @@
 namespace Entities;
 
-public class Enemy
+public class Enemy : Entity
 {
-    public float health = 100;
-    public float damage = 5;
-
     public Enemy(float hp, float dmg)
     {
         health = hp;
@@ -46,5 +43,16 @@ public class Enemy
         Console.WriteLine("Press enter to continue.");
         Console.ReadLine();
         return player.health -= dmg * critMultiplier;
+    }
+
+    public override void DisplayInfo()
+    {
+        Console.Clear();
+        Console.WriteLine("ENEMY");
+        Console.WriteLine("------");
+        Console.WriteLine($"Health: {health}");
+        Console.WriteLine($"Damage: {damage}");
+        Console.WriteLine("Press enter to continue.");
+        Console.ReadLine();
     }
 }

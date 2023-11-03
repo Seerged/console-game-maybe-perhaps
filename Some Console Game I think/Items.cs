@@ -47,10 +47,7 @@ public abstract class ItemBase
     private int _quantity;
     public int Quantity
     {
-        get 
-        {
-            return _quantity;
-        }
+        get => _quantity;
 
         set
         {
@@ -64,6 +61,8 @@ public abstract class ItemBase
     }
     
     public abstract void Info();
+    
+    public virtual void Use(Player player) {}
 }
 
 public class HealingItem : ItemBase
@@ -72,12 +71,13 @@ public class HealingItem : ItemBase
 
     public override void Info()
     {
-        Console.WriteLine(name);
-        Console.WriteLine(description);
-        Console.WriteLine($"Healing: {healing}");
+        Console.Clear();
+        Console.WriteLine($"{name}\n{description}\nHealing: {healing}");
+        Console.WriteLine("Press enter to continue.");
+        Console.ReadLine();
     }
 
-    public void Use(Player player)
+    public override void Use(Player player)
     {
         if (Quantity == 0) return;
 
@@ -97,12 +97,13 @@ public class CriticalItem : ItemBase
 
     public override void Info()
     {
-        Console.WriteLine(name);
-        Console.WriteLine(description);
-        Console.WriteLine($"Critical Damage Increase: {critMultiToAdd}");
+        Console.Clear();
+        Console.WriteLine($"{name}\n{description}\nCritical Damage Increase: {critMultiToAdd}");
+        Console.WriteLine("Press any key to continue.");
+        Console.ReadKey();
     }
 
-    public void Use(Player player)
+    public override void Use(Player player)
     {
         if (Quantity == 0) return;
 
