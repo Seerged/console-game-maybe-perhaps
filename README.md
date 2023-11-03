@@ -1,3 +1,4 @@
-# console-game-maybe-perhaps
-Just a repository so I can keep this stuff saved
-yeah idk im new to using github
+# Turn Based Console Game
+Small project im working on, using C#
+
+Its basically just a turn based game, where everytime you beat an enemy you roll a dice. When you get enough score from rolling a dice, you win. Theres also extra events that will be added... eventually
