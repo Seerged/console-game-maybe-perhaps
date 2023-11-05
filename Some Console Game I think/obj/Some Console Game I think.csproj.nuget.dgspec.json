@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\jmcgr212\\Documents\\C# Projects\\Some Console Game I think\\Some Console Game I think.csproj": {}
+    "C:\\Users\\XGaming Systems\\Documents\\VS Code Stuff\\Github Repos\\console-game-maybe-perhaps\\Some Console Game I think\\Some Console Game I think.csproj": {}
   },
   "projects": {
-    "D:\\jmcgr212\\Documents\\C# Projects\\Some Console Game I think\\Some Console Game I think.csproj": {
+    "C:\\Users\\XGaming Systems\\Documents\\VS Code Stuff\\Github Repos\\console-game-maybe-perhaps\\Some Console Game I think\\Some Console Game I think.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\jmcgr212\\Documents\\C# Projects\\Some Console Game I think\\Some Console Game I think.csproj",
+        "projectUniqueName": "C:\\Users\\XGaming Systems\\Documents\\VS Code Stuff\\Github Repos\\console-game-maybe-perhaps\\Some Console Game I think\\Some Console Game I think.csproj",
         "projectName": "Some Console Game I think",
-        "projectPath": "D:\\jmcgr212\\Documents\\C# Projects\\Some Console Game I think\\Some Console Game I think.csproj",
-        "packagesPath": "C:\\Users\\jmcgr212\\.nuget\\packages\\",
-        "outputPath": "D:\\jmcgr212\\Documents\\C# Projects\\Some Console Game I think\\obj\\",
+        "projectPath": "C:\\Users\\XGaming Systems\\Documents\\VS Code Stuff\\Github Repos\\console-game-maybe-perhaps\\Some Console Game I think\\Some Console Game I think.csproj",
+        "packagesPath": "C:\\Users\\XGaming Systems\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\XGaming Systems\\Documents\\VS Code Stuff\\Github Repos\\console-game-maybe-perhaps\\Some Console Game I think\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jmcgr212\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\XGaming Systems\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

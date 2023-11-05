@@ -9,22 +9,19 @@ public enum PlayerStates
 
 public class Player : Entity
 {
-    public PlayerStates playerState = PlayerStates.Alive;
     float critMultiplier = 1;
     public float critToAdd = 0;
+    public int defeatedEnemies = 0;
+    public float gold;
 
-    public List<ItemBase> inventory = new()
-    {
-        Items.ReturnItem(HealthPotions.Health),
-        Items.ReturnItem(CriticalPotions.Critical)
-    };
+    public PlayerStates playerState = PlayerStates.Alive;
+    public List<ItemBase> inventory = new();
 
-    public Player(float hp = 100, float dmg = 10)
+    public Player(float hp = 100, float dmg = 10, float gold = 0)
     {
         damage = dmg;
         health = hp;
-        inventory[0].Quantity = 1;
-        inventory[1].Quantity = 400;
+        this.gold = gold;
     }
 
     public float Attack(Enemy enemyToAttack)
@@ -73,9 +70,23 @@ public class Player : Entity
 
     public void ViewInventory()
     {
+        if (playerState == PlayerStates.Stunned)
+        {
+            Console.WriteLine("Player is stunned. You cannot access items. Select \"attack\" to continue.");
+            Console.WriteLine("Press enter to continue.");
+            Console.ReadLine();
+        }
+
+        if (inventory.Count < 1)
+        {
+            Console.WriteLine("You have no items available.\nPress enter to continue.");
+            Console.ReadLine();
+            return;
+        }
+
         Console.WriteLine("Item\tName\t\tQuantity\tStats");
         
-        for (int i  = 0; i < inventory.Count; i++)
+        for (int i = 0; i < inventory.Count; i++)
         {
             Console.Write($"{i + 1}. \t");
             Console.Write(inventory[i].name);
@@ -83,7 +94,7 @@ public class Player : Entity
             Console.WriteLine();
         }
 
-        Console.WriteLine("Type item number you would like to access (or press enter to exit)");
+        Console.WriteLine("\nType the item number you would like to access (or press enter to exit)");
         string? readInput = Console.ReadLine();
 
         if (readInput != null)
@@ -98,7 +109,7 @@ public class Player : Entity
                     Console.Clear();
                     Console.WriteLine($"Item selected: {inventory[i].name}");
                     Console.WriteLine("What would you like to do with this item?");
-                    Console.WriteLine("1: Use\n2: Inspect");
+                    Console.WriteLine("1. Use\n2. Inspect");
                     readInput = Console.ReadLine();
 
                     switch (readInput)
@@ -108,7 +119,7 @@ public class Player : Entity
                             break;
 
                         case "2":
-                            inventory[i].Info();
+                            inventory[i].ItemInfo();
                             break;
                     }
                 }
@@ -122,9 +133,7 @@ public class Player : Entity
     public void VerifyInventory()
     {
         for (int i = 0; i < inventory.Count; i++)
-        {
-            if (inventory[i].Quantity < 1) inventory.Remove(inventory[i]);
-        }
+            if (inventory[i].Quantity < 1) inventory.Remove(inventory[i]);   
     }
 
     public override void DisplayInfo()
@@ -135,7 +144,8 @@ public class Player : Entity
         Console.WriteLine($"Health: {health}");
         Console.WriteLine($"Damage: {damage}");
         Console.WriteLine($"Items in inventory: {inventory.Count}");
-        Console.WriteLine("Press enter to continue.");
+        Console.WriteLine($"Enemies defeated: {defeatedEnemies}");
+        Console.WriteLine("\nPress enter to continue.");
         Console.ReadLine();
     }
 }

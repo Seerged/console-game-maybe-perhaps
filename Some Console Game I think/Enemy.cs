@@ -52,7 +52,7 @@ public class Enemy : Entity
         Console.WriteLine("------");
         Console.WriteLine($"Health: {health}");
         Console.WriteLine($"Damage: {damage}");
-        Console.WriteLine("Press enter to continue.");
+        Console.WriteLine("\nPress enter to continue.");
         Console.ReadLine();
     }
 }

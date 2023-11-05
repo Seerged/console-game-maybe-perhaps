@@ -1,8 +1,11 @@
+using System.Runtime.InteropServices;
+
 namespace Entities;
 
 public enum HealthPotions
 {
-    Health
+    Health,
+    SuperHealth
 }
 
 public enum CriticalPotions
@@ -10,40 +13,55 @@ public enum CriticalPotions
     Critical
 }
 
-public static class Items
+public class Items
 {
-    public static readonly Dictionary<HealthPotions, HealingItem> healingPotions = new()
+    public readonly Dictionary<HealthPotions, HealingItem> healingPotions = new()
     {
-        {HealthPotions.Health, new()
+        {
+            HealthPotions.Health, new()
             {
                 name = "Health Potion",
                 description = "Heals you. It really doesn't do much else.",
-                Quantity = 0,
-                healing = 20
+                Quantity = 1,
+                healing = 20,
+                shopPrice = 100
+            }
+        },
+        {
+            HealthPotions.SuperHealth, new()
+            {
+                name = "SHealth Potion",
+                description = "Basically a beefed up version of the health potion.",
+                Quantity = 1,
+                healing = 50,
+                shopPrice = 214
             }
         }
     };
 
-    public static readonly Dictionary<CriticalPotions, CriticalItem> criticalPotions = new()
+    public readonly Dictionary<CriticalPotions, CriticalItem> criticalPotions = new()
     {
-        {CriticalPotions.Critical, new()
+        {
+            CriticalPotions.Critical, new()
             {
                 name = "Crit Potion",
                 description = "Increases crit damage multiplier.",
-                Quantity = 0,
-                critMultiToAdd = .5f
+                Quantity = 1,
+                critMultiToAdd = .5f,
+                shopPrice = 163
             }
         }
     };
 
-    public static HealingItem ReturnItem(HealthPotions key) => healingPotions[key];
-    public static CriticalItem ReturnItem(CriticalPotions key) => criticalPotions[key];
+    public HealingItem ReturnItem(HealthPotions key) => healingPotions[key];
+    public CriticalItem ReturnItem(CriticalPotions key) => criticalPotions[key];
 }
 
-public abstract class ItemBase
+public abstract class ItemBase : ICloneable
 {
     public string name = "No Name";
     public string description = "No Description";
+    public float shopPrice;
     private int _quantity;
     public int Quantity
     {
@@ -55,21 +73,22 @@ public abstract class ItemBase
 
             if (value < 0) return;
 
-
             _quantity = value;
         }
     }
+
+    public abstract object Clone();
+
+    public abstract void ItemInfo();
     
-    public abstract void Info();
-    
-    public virtual void Use(Player player) {}
+    public virtual void Use(Player player) => throw new NotImplementedException();
 }
 
 public class HealingItem : ItemBase
 {
     public float healing = 0f;
 
-    public override void Info()
+    public override void ItemInfo()
     {
         Console.Clear();
         Console.WriteLine($"{name}\n{description}\nHealing: {healing}");
@@ -89,13 +108,25 @@ public class HealingItem : ItemBase
         Console.WriteLine("Press any key to continue.");
         Console.ReadKey();
     }
+
+    public override object Clone()
+    {
+        return new HealingItem
+        {
+            name = name,
+            description = description,
+            shopPrice = shopPrice,
+            Quantity = Quantity,
+            healing = healing
+        };
+    }
 }
 
 public class CriticalItem : ItemBase
 {
-    public float critMultiToAdd = 0;
+    public float critMultiToAdd;
 
-    public override void Info()
+    public override void ItemInfo()
     {
         Console.Clear();
         Console.WriteLine($"{name}\n{description}\nCritical Damage Increase: {critMultiToAdd}");
@@ -114,5 +145,17 @@ public class CriticalItem : ItemBase
         Console.WriteLine($"Increased crit damage by {critMultiToAdd} next time you get a critical hit.");
         Console.WriteLine("Press any key to continue.");
         Console.ReadKey();
+    }
+
+    public override object Clone()
+    {
+        return new CriticalItem()
+        {
+            name = name,
+            description = description,
+            shopPrice = shopPrice,
+            Quantity = Quantity,
+            critMultiToAdd = critMultiToAdd
+        };
     }
 }
