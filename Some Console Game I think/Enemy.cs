@@ -2,10 +2,13 @@ namespace Entities;
 
 public class Enemy : Entity
 {
-    public Enemy(float hp, float dmg)
+    public string Name { get; init; }
+
+    public Enemy(float hp, float dmg, string enemyName = "Enemy")
     {
-        health = hp;
-        damage = dmg;
+        Health = hp;
+        Damage = dmg;
+        Name = enemyName;
     }
 
     public float Attack(Player player)
@@ -15,7 +18,7 @@ public class Enemy : Entity
         Console.WriteLine($"{randChance:P}");
         float critMultiplier = 1;
 
-        float dmg = damage;
+        float dmg = Damage;
 
         if (randChance > .89 && randChance < .9)
         {
@@ -39,19 +42,21 @@ public class Enemy : Entity
             critMultiplier = 2.5f;      
         }
 
-        Console.WriteLine($"You were attacked for {dmg * critMultiplier} damage!");
+        Console.WriteLine($"You were attacked for {Math.Round(dmg * critMultiplier, 2)} damage!");
         Console.WriteLine("Press enter to continue.");
         Console.ReadLine();
-        return player.health -= dmg * critMultiplier;
+        return player.TakeDamage(dmg * critMultiplier);
     }
+
+    public override float TakeDamage(float damage) => Health -= damage;
 
     public override void DisplayInfo()
     {
         Console.Clear();
-        Console.WriteLine("ENEMY");
+        Console.WriteLine(Name);
         Console.WriteLine("------");
-        Console.WriteLine($"Health: {health}");
-        Console.WriteLine($"Damage: {damage}");
+        Console.WriteLine($"Health: {Health}");
+        Console.WriteLine($"Damage: {Math.Round(Damage, 2)}");
         Console.WriteLine("\nPress enter to continue.");
         Console.ReadLine();
     }

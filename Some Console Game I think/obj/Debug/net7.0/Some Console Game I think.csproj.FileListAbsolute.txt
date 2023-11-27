@@ -12,3 +12,17 @@ D:\jmcgr212\Documents\C# Projects\Some Console Game I think\obj\Debug\net7.0\ref
 D:\jmcgr212\Documents\C# Projects\Some Console Game I think\obj\Debug\net7.0\Some Console Game I think.pdb
 D:\jmcgr212\Documents\C# Projects\Some Console Game I think\obj\Debug\net7.0\Some Console Game I think.genruntimeconfig.cache
 D:\jmcgr212\Documents\C# Projects\Some Console Game I think\obj\Debug\net7.0\ref\Some Console Game I think.dll
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\bin\Debug\net7.0\Some Console Game I think.exe
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\bin\Debug\net7.0\Some Console Game I think.deps.json
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\bin\Debug\net7.0\Some Console Game I think.runtimeconfig.json
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\bin\Debug\net7.0\Some Console Game I think.dll
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\bin\Debug\net7.0\Some Console Game I think.pdb
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\obj\Debug\net7.0\Some Console Game I think.GeneratedMSBuildEditorConfig.editorconfig
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\obj\Debug\net7.0\Some Console Game I think.AssemblyInfoInputs.cache
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\obj\Debug\net7.0\Some Console Game I think.AssemblyInfo.cs
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\obj\Debug\net7.0\Some Console Game I think.csproj.CoreCompileInputs.cache
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\obj\Debug\net7.0\Some Console Game I think.dll
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\obj\Debug\net7.0\refint\Some Console Game I think.dll
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\obj\Debug\net7.0\Some Console Game I think.pdb
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\obj\Debug\net7.0\Some Console Game I think.genruntimeconfig.cache
+D:\jmcgr212\Documents\console-game-maybe-perhaps-main\console-game-maybe-perhaps-main\Some Console Game I think\obj\Debug\net7.0\ref\Some Console Game I think.dll

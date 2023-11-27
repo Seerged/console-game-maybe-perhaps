@@ -9,26 +9,26 @@ public enum PlayerStates
 
 public class Player : Entity
 {
-    float critMultiplier = 1;
     public float critToAdd = 0;
     public int defeatedEnemies = 0;
     public float gold;
+    public WeaponBase weapon = new WeaponsDictionary().ReturnWeapon(WeaponKeys.RustedBlade);
 
     public PlayerStates playerState = PlayerStates.Alive;
     public List<ItemBase> inventory = new();
 
-    public Player(float hp = 100, float dmg = 10, float gold = 0)
+    public Player(float hp = 100, float dmg = 3)
     {
-        damage = dmg;
-        health = hp;
-        this.gold = gold;
+        Damage = dmg;
+        Health = hp;
+        gold = 0;
     }
 
     public float Attack(Enemy enemyToAttack)
     {
         if (playerState == PlayerStates.Dead) throw new ArgumentException("You're dead stupid. You can't attack.");
 
-        critMultiplier = 1;
+        float critMultiplier = 1;
 
         if (playerState == PlayerStates.Stunned)
         {
@@ -43,10 +43,11 @@ public class Player : Entity
         double randChance = random.NextDouble();
         Console.WriteLine($"{randChance:P}");
 
-        float dmg = damage;
+        float dmg = Damage + weapon.Damage;
 
         // calculate missed hit
-        if (randChance > .98) {
+        if (randChance <= weapon.MissChance) 
+        {
             Console.WriteLine("Missed!");
             Console.WriteLine("Press enter to continue.");
             Console.ReadLine();
@@ -54,9 +55,10 @@ public class Player : Entity
         }
 
         // calculate critical hit
-        if (randChance > .85 && randChance < .98){
+        if (randChance > weapon.MissChance && randChance <= weapon.CritChance)
+        {
             Console.WriteLine("CRITICAL HIT!");
-            critMultiplier = 2.5f;
+            critMultiplier += weapon.CritMultiplier;
             critMultiplier += critToAdd;
 
             critToAdd = 0;
@@ -65,8 +67,12 @@ public class Player : Entity
         Console.WriteLine($"{dmg * critMultiplier} damage dealt to the enemy.");
         Console.WriteLine("Press enter to continue.");
         Console.ReadLine();
-        return enemyToAttack.health -= dmg * critMultiplier;
+        return enemyToAttack.TakeDamage(dmg * critMultiplier);
     }
+
+    public override float TakeDamage(float damage) => Health -= damage;
+
+    public float Heal(float health) => Health += health;
 
     public void ViewInventory()
     {
@@ -75,6 +81,7 @@ public class Player : Entity
             Console.WriteLine("Player is stunned. You cannot access items. Select \"attack\" to continue.");
             Console.WriteLine("Press enter to continue.");
             Console.ReadLine();
+            return;
         }
 
         if (inventory.Count < 1)
@@ -84,13 +91,14 @@ public class Player : Entity
             return;
         }
 
-        Console.WriteLine("Item\tName\t\tQuantity\tStats");
+        Console.WriteLine($"Item{"Name", 21}{"Quantity", 14}{"Stats", 24}");
         
         for (int i = 0; i < inventory.Count; i++)
         {
-            Console.Write($"{i + 1}. \t");
-            Console.Write(inventory[i].name);
-            Console.Write($"\t{inventory[i].Quantity}\t");
+            Console.Write("{0}", $"{i + 1}.");
+            Console.Write($"{inventory[i].Name, 23}");
+            Console.Write($"{inventory[i].Quantity, 14}");
+            Console.Write($"{inventory[i].WriteItemTooltip(), 24}");
             Console.WriteLine();
         }
 
@@ -107,7 +115,7 @@ public class Player : Entity
                 {
                     itemExists = true;
                     Console.Clear();
-                    Console.WriteLine($"Item selected: {inventory[i].name}");
+                    Console.WriteLine($"Item selected: {inventory[i].Name}");
                     Console.WriteLine("What would you like to do with this item?");
                     Console.WriteLine("1. Use\n2. Inspect");
                     readInput = Console.ReadLine();
@@ -133,7 +141,9 @@ public class Player : Entity
     public void VerifyInventory()
     {
         for (int i = 0; i < inventory.Count; i++)
+        {
             if (inventory[i].Quantity < 1) inventory.Remove(inventory[i]);   
+        }
     }
 
     public override void DisplayInfo()
@@ -141,10 +151,12 @@ public class Player : Entity
         Console.Clear();
         Console.WriteLine("PLAYER");
         Console.WriteLine("------");
-        Console.WriteLine($"Health: {health}");
-        Console.WriteLine($"Damage: {damage}");
+        Console.WriteLine($"Equipped Weapon: {weapon.Name}");
+        Console.WriteLine($"Health: {Math.Round(Health, 2)}");
+        Console.WriteLine($"Damage: {Damage} + ({weapon.Damage})");
         Console.WriteLine($"Items in inventory: {inventory.Count}");
         Console.WriteLine($"Enemies defeated: {defeatedEnemies}");
+        Console.WriteLine($"Gold: {gold}");
         Console.WriteLine("\nPress enter to continue.");
         Console.ReadLine();
     }

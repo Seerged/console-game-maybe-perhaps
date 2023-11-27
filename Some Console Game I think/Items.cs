@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace Entities;
 
 public enum HealthPotions
@@ -8,7 +6,7 @@ public enum HealthPotions
     SuperHealth
 }
 
-public enum CriticalPotions
+public enum CritPotions
 {
     Critical
 }
@@ -20,48 +18,48 @@ public class Items
         {
             HealthPotions.Health, new()
             {
-                name = "Health Potion",
-                description = "Heals you. It really doesn't do much else.",
+                Name = "Health Potion",
+                Description = "Heals you. It really doesn't do much else.",
                 Quantity = 1,
-                healing = 20,
-                shopPrice = 100
+                Healing = 20,
+                ShopPrice = 100
             }
         },
         {
             HealthPotions.SuperHealth, new()
             {
-                name = "SHealth Potion",
-                description = "Basically a beefed up version of the health potion.",
+                Name = "S Health Potion",
+                Description = "Short for Super Health Potion. Basically a beefed up version of the health potion.",
                 Quantity = 1,
-                healing = 50,
-                shopPrice = 214
+                Healing = 50,
+                ShopPrice = 214
             }
         }
     };
 
-    public readonly Dictionary<CriticalPotions, CriticalItem> criticalPotions = new()
+    public readonly Dictionary<CritPotions, CritPotion> criticalPotions = new()
     {
         {
-            CriticalPotions.Critical, new()
+            CritPotions.Critical, new()
             {
-                name = "Crit Potion",
-                description = "Increases crit damage multiplier.",
+                Name = "Crit Potion",
+                Description = "Increases crit damage multiplier.",
                 Quantity = 1,
-                critMultiToAdd = .5f,
-                shopPrice = 163
+                CritMultiToAdd = .5f,
+                ShopPrice = 163
             }
         }
     };
 
     public HealingItem ReturnItem(HealthPotions key) => healingPotions[key];
-    public CriticalItem ReturnItem(CriticalPotions key) => criticalPotions[key];
+    public CritPotion ReturnItem(CritPotions key) => criticalPotions[key];
 }
 
 public abstract class ItemBase : ICloneable
 {
-    public string name = "No Name";
-    public string description = "No Description";
-    public float shopPrice;
+    public string Name { get; init; } = "No Name";
+    public string Description { get; init; } = "No Description";
+    public float ShopPrice { get; init; }
     private int _quantity;
     public int Quantity
     {
@@ -69,29 +67,32 @@ public abstract class ItemBase : ICloneable
 
         set
         {
-            if (value > 999) throw new ArgumentOutOfRangeException("Quantity cannot be over 1000. How did you get that many anyways?");
-
-            if (value < 0) return;
+            if (value < 0) 
+            {
+                Console.WriteLine("WARNING: Quantity decremented below 0. Check logic in code");
+                Console.ReadLine();
+                return;
+            }
 
             _quantity = value;
         }
     }
 
     public abstract object Clone();
-
     public abstract void ItemInfo();
-    
+    public abstract string WriteItemTooltip();
+
     public virtual void Use(Player player) => throw new NotImplementedException();
 }
 
 public class HealingItem : ItemBase
 {
-    public float healing = 0f;
+    public float Healing { get; init; } = 0f;
 
     public override void ItemInfo()
     {
         Console.Clear();
-        Console.WriteLine($"{name}\n{description}\nHealing: {healing}");
+        Console.WriteLine($"{Name}\n{Description}\nHealing: {Healing}");
         Console.WriteLine("Press enter to continue.");
         Console.ReadLine();
     }
@@ -100,36 +101,38 @@ public class HealingItem : ItemBase
     {
         if (Quantity == 0) return;
 
-        player.health += healing;
+        player.Heal(Healing);
         Quantity--;
 
         Console.Clear();
-        Console.WriteLine($"Healed for {healing} hp.");
+        Console.WriteLine($"Healed for {Healing} hp.");
         Console.WriteLine("Press any key to continue.");
         Console.ReadKey();
     }
+
+    public override string WriteItemTooltip() => $"+{Healing} healing";
 
     public override object Clone()
     {
         return new HealingItem
         {
-            name = name,
-            description = description,
-            shopPrice = shopPrice,
+            Name = Name,
+            Description = Description,
+            ShopPrice = ShopPrice,
             Quantity = Quantity,
-            healing = healing
+            Healing = Healing
         };
     }
 }
 
-public class CriticalItem : ItemBase
+public class CritPotion : ItemBase
 {
-    public float critMultiToAdd;
+    public float CritMultiToAdd { get; init; }
 
     public override void ItemInfo()
     {
         Console.Clear();
-        Console.WriteLine($"{name}\n{description}\nCritical Damage Increase: {critMultiToAdd}");
+        Console.WriteLine($"{Name}\n{Description}\nCritical Damage Increase: {CritMultiToAdd}");
         Console.WriteLine("Press any key to continue.");
         Console.ReadKey();
     }
@@ -142,20 +145,22 @@ public class CriticalItem : ItemBase
         player.critToAdd += .5f;
 
         Console.Clear();
-        Console.WriteLine($"Increased crit damage by {critMultiToAdd} next time you get a critical hit.");
+        Console.WriteLine($"Increased crit damage by {CritMultiToAdd} next time you get a critical hit.");
         Console.WriteLine("Press any key to continue.");
         Console.ReadKey();
     }
 
+    public override string WriteItemTooltip() => $"{CritMultiToAdd} Crit multiplier";
+
     public override object Clone()
     {
-        return new CriticalItem()
+        return new CritPotion()
         {
-            name = name,
-            description = description,
-            shopPrice = shopPrice,
+            Name = Name,
+            Description = Description,
+            ShopPrice = ShopPrice,
             Quantity = Quantity,
-            critMultiToAdd = critMultiToAdd
+            CritMultiToAdd = CritMultiToAdd
         };
     }
 }
