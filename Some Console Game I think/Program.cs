@@ -554,7 +554,7 @@ ItemBase[] GenerateItems(int limit, int maxQuantity)
 
   List<ItemBase> itemsAvailable = new()
   {
-    { items.ReturnItem(CritPotions.Critical) },
+    { items.ReturnItem(CritPotions.CriticalMultiplier) },
     { items.ReturnItem(HealthPotions.Health) },
     { items.ReturnItem(HealthPotions.SuperHealth) },
     { weapons.ReturnWeapon(WeaponKeys.ShortSword) },
@@ -585,10 +585,10 @@ ItemBase GenerateRandomItem()
 
   ItemBase[] itemsAvailable = 
   {
-    items.ReturnItem(CritPotions.Critical),
+    items.ReturnItem(CritPotions.CriticalMultiplier),
     items.ReturnItem(HealthPotions.Health),
-    items.ReturnItem(HealthPotions.SuperHealth) ,
-    weapons.ReturnWeapon(WeaponKeys.ShortSword) ,
+    items.ReturnItem(HealthPotions.SuperHealth),
+    weapons.ReturnWeapon(WeaponKeys.ShortSword),
     weapons.ReturnWeapon(WeaponKeys.WarAxe) 
   };
 

@@ -8,7 +8,8 @@ public enum HealthPotions
 
 public enum CritPotions
 {
-    Critical
+    CriticalMultiplier,
+    CriticalChance
 }
 
 public class Items
@@ -37,18 +38,18 @@ public class Items
         }
     };
 
-    public readonly Dictionary<CritPotions, CritPotion> criticalPotions = new()
+    private readonly Dictionary<CritPotions, CritPotion> criticalPotions = new()
     {
         {
-            CritPotions.Critical, new()
+            CritPotions.CriticalMultiplier, new()
             {
-                Name = "Crit Potion",
-                Description = "Increases crit damage multiplier.",
+                Name = "Crit Multi Potion",
+                Description = "Increases crit damage multiplier on your next critical hit.",
                 Quantity = 1,
                 CritMultiToAdd = .5f,
                 ShopPrice = 163
             }
-        }
+        },
     };
 
     public HealingItem ReturnItem(HealthPotions key) => healingPotions[key];
@@ -81,8 +82,7 @@ public abstract class ItemBase : ICloneable
     public abstract object Clone();
     public abstract void ItemInfo();
     public abstract string WriteItemTooltip();
-
-    public virtual void Use(Player player) => throw new NotImplementedException();
+    public abstract void Use(Player player); //=> throw new NotImplementedException();
 }
 
 public class HealingItem : ItemBase

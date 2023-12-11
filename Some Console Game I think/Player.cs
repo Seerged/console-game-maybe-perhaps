@@ -26,7 +26,7 @@ public class Player : Entity
 
     public float Attack(Enemy enemyToAttack)
     {
-        if (playerState == PlayerStates.Dead) throw new ArgumentException("You're dead stupid. You can't attack.");
+        if (playerState == PlayerStates.Dead) throw new InvalidOperationException("You're dead stupid. You can't attack.");
 
         float critMultiplier = 1;
 
@@ -43,7 +43,7 @@ public class Player : Entity
         double randChance = random.NextDouble();
         Console.WriteLine($"{randChance:P}");
 
-        float dmg = Damage + weapon.Damage;
+        float trueDamage = Damage + weapon.Damage;
 
         // calculate missed hit
         if (randChance <= weapon.MissChance) 
@@ -64,10 +64,10 @@ public class Player : Entity
             critToAdd = 0;
         }
 
-        Console.WriteLine($"{dmg * critMultiplier} damage dealt to the enemy.");
+        Console.WriteLine($"{trueDamage * critMultiplier} damage dealt to the enemy.");
         Console.WriteLine("Press enter to continue.");
         Console.ReadLine();
-        return enemyToAttack.TakeDamage(dmg * critMultiplier);
+        return enemyToAttack.TakeDamage(trueDamage * critMultiplier);
     }
 
     public override float TakeDamage(float damage) => Health -= damage;
